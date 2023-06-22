@@ -35,6 +35,27 @@ const trasladoPost = async(req, res= response) =>{
     })
 }
 
+const trasladoPut = async(req,res = response) =>{
+
+    const{nombre_estudiante, documento, curso_actual, curso_nuevo, detalle, estado} = req.body
+    let mensaje = ''
+
+    try{
+        const traslado = await Traslado.findOneAndUpdate({documento: documento}, {nombre_estudiante:nombre_estudiante, curso_actual:curso_actual, curso_nuevo:curso_nuevo, detalle: detalle, estado:estado})
+        mensaje = 'Modificado exitosamente'
+    }
+    catch(e){
+        mensaje='Error al modificar'
+    }
+
+    res.json({
+        msg: mensaje
+
+    }
+    )
+}
+ 
+
 const trasladoDelete = async (req, res = response) =>{
     const {_id} = req.body
     let mensaje = ''
@@ -53,6 +74,7 @@ const trasladoDelete = async (req, res = response) =>{
 
 module.exports = {
     trasladoGet,
+    trasladoPut,
     trasladoPost,
     trasladoDelete
 }
